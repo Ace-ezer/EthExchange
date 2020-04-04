@@ -1,0 +1,68 @@
+/* Styles go here */
+
+  
+  .flip-card {
+    position: relative;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 #00000033;
+  }
+
+  /* Switch */
+  .switcher {
+    text-align: center;
+  }
+  
+  .switcher .fieldset {
+    display: inline-block;
+    position: relative;
+    padding: 1px;
+    border-radius: 50em;
+    border: 2px solid #2d3e50;
+  }
+  
+  .switcher input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .switcher label {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    float: left;
+    width: 91px;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: #a09999;
+  }
+  
+  .switcher .switch {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 45px;
+    width: 90px;
+    background-color: #2d3e50;
+    border-radius: 50em;
+    -webkit-transition: -webkit-transform 0.5s;
+    -moz-transition: -moz-transform 0.5s;
+    transition: transform 0.5s;
+  }
+  
+  .switcher input[type="radio"]:checked + label + .switch,
+  .switcher input[type="radio"]:checked + label:nth-of-type(n) + .switch {
+    -webkit-transform: translateX(90px);
+    -moz-transform: translateX(90px);
+    -ms-transform: translateX(90px);
+    -o-transform: translateX(90px);
+    transform: translateX(90px);
+  }
+  
+  .no-js .switcher {
+    display: none;
+  }
