@@ -16,6 +16,7 @@ class Main extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    // Handles card flip of the forms
     handleClick = (e) => {
         //e.preventDefault();
         //this.setState(prevState => ({ isFlipped: !prevState.isFlipped }));

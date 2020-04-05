@@ -15,6 +15,7 @@ class SellForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    // Handles change in Input field of the sell form
     handleChange = e => {
         const value = e.target.value;
         if (value !== '') {
@@ -25,6 +26,7 @@ class SellForm extends Component {
         }
     }
 
+    // Handles form submission & Invokes sellTokens function
     handleSubmit = e => {
         e.preventDefault();
         const value = this.state.output * 100;

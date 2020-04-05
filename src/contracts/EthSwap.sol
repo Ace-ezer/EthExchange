@@ -29,25 +29,31 @@ contract EthSwap {
     function buyTokens() public payable {
         uint256 tokenAmount = msg.value * rate;
 
+        // Checks whether the user have enough balance
         require(
             token.balanceOf(address(this)) >= tokenAmount,
             "Available tokens are less than requested amount."
         );
+
+        // Transfer the amount to the user
         token.transfer(msg.sender, tokenAmount);
 
         emit TokenPurchased(msg.sender, address(token), tokenAmount, rate);
     }
 
     function sellTokens(uint256 _amount) public {
-        require(token.balanceOf(msg.sender) >= _amount, "Not Enough token");
+        // Checks whether the user have enough tokens
+        require(token.balanceOf(msg.sender) >= _amount, "Not Enough tokens");
 
         uint256 etherAmount = _amount / rate;
 
+        // Checks whether the user have enough balance for transaction
         require(
             address(this).balance >= etherAmount,
             "You don't have sufficient amount."
         );
 
+        // Tranfer the ether in exchange of tokens from the contract
         token.transferFrom(msg.sender, address(this), _amount);
         msg.sender.transfer(etherAmount);
 

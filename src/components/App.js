@@ -42,6 +42,7 @@ class App extends Component {
     await this.loadBlockchainData();
   }
 
+  // Load data from the Blockchain  
   async loadBlockchainData() {
     const web3 = window.web3;
 
@@ -51,7 +52,7 @@ class App extends Component {
     const ethBalance = await web3.eth.getBalance(this.state.account);
     this.setState({ ethBalance: ethBalance });
 
-    // Load Token
+    // Load Tokens
     const networkId = await web3.eth.net.getId();
     const tokenData = Token.networks[networkId];
     if (tokenData) {
@@ -65,7 +66,7 @@ class App extends Component {
       window.alert("Token contract not deployed to detected network.");
     }
 
-    // Load EthSwap
+    // Load EthSwaps
     const ethSwapData = EthSwap.networks[networkId];
     if (ethSwapData) {
       const address = ethSwapData.address;
@@ -78,6 +79,7 @@ class App extends Component {
     this.setState({ loading: false });
   }
 
+  // Check whether the browser is ethereum enabled
   async loadWeb3() {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -91,8 +93,11 @@ class App extends Component {
     }
   }
 
+  // Handles purchase of tokens
   buyTokens = (ethAmount) => {
     this.setState({ loading: true });
+
+    // Call buyTokens function from contract
     this.state.ethSwap.methods.buyTokens()
       .send({ value: ethAmount, from: this.state.account })
       .on('transactionHash', (hash) => {
@@ -105,13 +110,16 @@ class App extends Component {
       });;
   }
 
+  // Handles selling of tokens
   sellTokens = (tokenAmount) => {
     this.setState({ loading: true });
 
+    // Approve spending of your tokens before selling them
     this.state.token.methods.approve(this.state.ethSwap.address, tokenAmount)
       .send({ from: this.state.account })
       .on('transactionHash', hash => {
 
+        // Call sellTokens function from contract
         this.state.ethSwap.methods.sellTokens(tokenAmount)
           .send({ from: this.state.account })
           .on('transactionHash', (hash) => {
@@ -126,6 +134,7 @@ class App extends Component {
   }
 
   render() {
+    // Sets the content to loader until data is fetched
     let content = this.state.loading ? (
       <p className="text-center">
         <img src={Loader} alt="Loading..." style={{ height: '100px', width: '100px' }} />
